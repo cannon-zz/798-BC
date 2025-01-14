@@ -8,9 +8,17 @@ Eventually I found one of the old clock chips for sale and decided to make a bra
 
 This is a record the final result in case it would entertain others to make one, too.
 
+## Photos
+
+![All Done](IMG_20181022_185056.jpg)
+
+![Some Colour Choices](IMG_20180915_163829.jpg)
+
+![Joystick Control](analogue_control/control.jpg)
+
 ## Parts List
 
-Where I changed the circuit from the original by Active Surplus (Queen St. W., Toronto), the original components are shown, and my subsitutes are in parentheses.  The changes are due to the lower current that modern LEDs require to deliver a sensible amount of light:  need to use higher resistance series current limiting resistors, and can get away with lower-rated rectifier diodes in the power supply.
+Where I changed the circuit from the original, the original components are shown, and my subsitutes are in parentheses.  The changes are due to the lower current that modern LEDs require to deliver a sensible amount of light:  need to use higher resistance series current limiting resistors, and can get away with lower-rated rectifier diodes in the power supply.
 
 ### Connectors
 
@@ -42,6 +50,6 @@ drop-in replacements:
 - 1x MM5311 Digital Clock		<-- 3rd control is "HOLD"
 
 requires new board:
-- MM5313:  adds 1 PPS output;  looses output enable pin.
-- MM5315:  has four controls instead of 3 (both RESET and HOLD inputs);  looses
+- MM5313:  adds 1 PPS output;  loses output enable pin.
+- MM5315:  has four controls instead of 3 (both RESET and HOLD inputs);  loses
 output enable pin.
