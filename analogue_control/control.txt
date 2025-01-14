@@ -1,0 +1,26 @@
+the clock chip pulls the, "hold", "fast" and "slow" pins high, and the functions are enabled by an external circuit pulling them low to ground.  the chip appears to sense current draw, not voltage, and a very tiny current draw is sufficient to trigger it.
+
+we had a self-centering variable resistor with a cool feel that we wanted to use for the user interface:  crank one way for slow, crank the other way for fast.  the resistor has a total resistance of 180 kOhm, and is linear so it has 90 kOhm from each end to the wiper when in the neutral position.  because the chip senses current draw through its pins, and even very small currents trigger the chip, it's not enough to rely solely on a resistive voltage divider type arrangement to move the voltage on the pin above and below a trigger threshold.  instead we combine a resistive voltage divider with a diode and use the non-linear conduction of the diode to act as a switch for the circuit.
+
+a resistor is connected from +V to one end of the variable resistor, and the wiper is connected to ground.  the resistor and the portion of the variable resistor between it and the wiper form a resistive voltage divider.  the voltage at the junction between the resistor and the variable resistor is
+
+		Vsense = V * Rwiper / (R + Rwiper)
+
+where V is the supply votage, R is the resistance of the fixed resistor, and the variable resistor's resistance is 0 Ohm <= Rwiper <= 180 kOhm, with Rwiper = 90 kOhm when the resistor is in the neutral position.  a diode is connected from a control pin of the chip to the junction between the resistors.  the chip is pulling the pin high to +V.  the diode will conduct current to ground but only if the voltage across the diode
+
+	= V - Vsense
+	= V ( 1 - Rwiper / (R + Rwiper) )
+	= V R / (R + Rwiper)
+
+exceeds its forward bias voltage, otherwise the diode appears to be an open circuit.  therefore, we choose a diode with a relatively high forward bias voltage and choose R so that when Rwiper = 90 kOhm the voltage across the diode is less than its forward bias voltage.  we used 1N4148 diodes because I had 100s in my parts bin, but obviously there is no need to use such a high-current diode in this application.  1N4148 diodes have a forward bias voltage of not more than 1 V, so the fixed resistor's value is given by
+
+	1 > V R / (R + 90000)
+	R < 90000 / (V - 1)
+
+if the supply voltage is 12 V then
+
+	R < 8 kOhm.
+
+because the voltage drop across the diode when not conducting is proportional to the supply voltage, the smaller the value of the fixed resistor the less risk there is that a voltage fluctuation will accidentally trigger a time adjustment.  on the other hand, too small a resistor will draw excessive current and dissipate excess power when the control knob is used.  we chose a 1.6 kOhm resistor.  for a 12 V supply:  a 1.6 kOhm resistor leads to a 200 mV drop across the diode when the control is in the neutral position, and it dissipates 12^2 / 1600 = 90 mW of power when the control is hard-over.
+
+in the final circuit, instead of directly grounding the wiper of the variable resistor, it gets connected to the "hold" pin, which is in turn connected to ground through a switch.  in this way, unless the clock is put into the "hold" state, the control knob is not grounded.  this means the clock's time cannot be accidentally adjusted by curious people playing with the knob, and also means the voltage divider resistors don't add to the clock's power requirements unless the clock's time is being set.
