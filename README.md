@@ -8,6 +8,8 @@ Eventually I found one of the old clock chips for sale and decided to make a bra
 
 This is a record the final result in case it would entertain others to make one, too.
 
+The files are gEDA / lepton-eda format.  Debian moved to lepton-eda, so I know they're compatible with that, otherwise your mileage may vary.
+
 ## Photos
 
 ![All Done](IMG_20181022_185056.jpg)
